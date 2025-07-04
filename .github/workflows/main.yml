@@ -7,10 +7,10 @@ on:
 jobs:
   test:
     timeout-minutes: 60
-    runs-on: windows-latest
+    runs-on: ubuntu-latest  # Mudança para Ubuntu
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: 18
       - name: Install dependencies
@@ -19,7 +19,9 @@ jobs:
         run: npx playwright install --with-deps
       - name: Run Playwright tests
         run: npm run test:e2e
-      - uses: actions/upload-artifact@v3
+        env:
+          ENV: qa  # Definir a variável ENV diretamente
+      - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: playwright-report
